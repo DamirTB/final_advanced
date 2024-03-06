@@ -1,5 +1,4 @@
 FROM golang:1.20.1-alpine3.16 as base
-LABEL Team="msarvaro nmagau" Project="Rabbit" 
 
 RUN apk add build-base 
 WORKDIR /app 
