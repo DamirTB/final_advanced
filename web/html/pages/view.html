@@ -1,0 +1,124 @@
+{{define "title"}} Post #{{.Models.Post.ID}}{{end}}
+
+{{define "main"}}
+{{ if not .IsAuthenticated}}
+<script src="/static/js/like.js"></script>
+{{ end }}
+
+<div class="base">
+    <!-- post feed-->
+    <div class="post-feed">
+        <!-- post -->
+        <div class="post">
+            <div class="post-content">
+                <div class="post-top-info">
+
+                    <div class="post-top-user"><img src="/static/img/ava/user.png" alt="user-ava">
+                        <p>{{.Models.Post.Username}}</p>
+                        <p class="post-date">{{.Models.Post.CreatedAt.Format "2006-01-02 15:04:05"}}</p>
+                    </div>
+
+                    <div class="likes-frame">
+                        <form action="/post/reaction/{{.Models.Post.ID}}?reaction=like" method="POST">
+                            <button class="like-button" id="like">
+                                <img src="/static/img/svg/like-icon.svg" alt="like"><span
+                                    class="rating-count">{{.Models.Post.Likes}}</span>
+                            </button>
+                        </form>
+
+                        <form action="/post/reaction/{{.Models.Post.ID}}?reaction=dislike" method="POST">
+                            <button class="like-button" id="dislike"><img src="/static/img/svg/dislike.svg"
+                                    alt="dislike"><span class="rating-count">{{.Models.Post.Dislikes}} </span>
+                            </button>
+                        </form>
+
+
+                    </div>
+
+                </div>
+
+                <div class="post-header">
+                    <a href="#">
+                        <h1>{{.Models.Post.Title}}</h1>
+                    </a>
+                </div>
+                <div class="post-text">
+                    <p>{{ .Models.Post.Content }}</p>
+                </div>
+                <div class="likes-frame post-tags">
+                    {{range .Models.Post.PostTags}}
+                    <button class="like-button tag" disabled>{{.}} </button>
+                    {{end}}
+                </div>
+                <!-- <div class="post-img"><img src="/static/img/sample.png" alt="post-img">
+                    
+                </div> -->
+
+                <div class="post-footer">
+                    <div class="post-comments"><img src="/static/img/svg/comment-icon.svg" alt="comment-icon">
+                        {{.Models.Post.CommentsLen}}
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        <!-- comments -->
+        {{range .Models.Comments}}
+        <div class="post">
+            <div class="post-content">
+                <div class="post-top-info">
+
+                    <div class="post-top-user">
+                        <p>{{.Username}}</p>
+                        <p class="post-date">{{.CreatedAt.Format "2006-01-02 15:04:05"}}</p>
+                    </div>
+
+                    <div class="likes-frame">
+                        <form action="/post/comment/reaction/{{.PostID}}/{{.ID}}?reaction=like" method="POST">
+                            <button class="like-button" id="like">
+                                <img src="/static/img/svg/like-icon.svg" alt="like"><span
+                                    class="rating-count">{{.Likes}}</span>
+                            </button>
+                        </form>
+
+                        <form action="/post/comment/reaction/{{.PostID}}/{{.ID}}?reaction=dislike" method="POST">
+                            <button class="like-button" id="dislike">
+                                <img src="/static/img/svg/dislike.svg"
+                                    alt="dislike"><span class="rating-count">{{.Dislikes}}</span>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="post-text">
+                    <p>{{.Content}}</p>
+                </div>
+
+            </div>
+        </div>
+        {{end}}
+
+        <!-- Leave Your comment -->
+        {{if .IsAuthenticated}}
+        <script src="/static/js/comment.js"></script>
+        <div class="feed-message-wrapper">
+            <div class="comment-frame">
+
+                <form action="/post/comment/{{.Models.Post.ID}}" method="POST" id="commentForm">
+                    <p class="error-msg"></p>
+                    <br>
+                    <textarea class="white-text-area" name="commentContent" id="usercomment" type="text" minlength="3"
+                        maxlength="256" spellcheck="false" required></textarea>
+                    <button class="light-button">Leave Comment</button>
+                </form>
+            </div>
+        </div>
+        {{end}}
+
+    </div>
+
+</div>
+
+{{end}}
