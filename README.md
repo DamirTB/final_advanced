@@ -23,7 +23,7 @@ Forum is a web application that allows authorized users to create, comment, like
 
 1. Clone the repository   
 ```bash     
-    git clone https://github.com/DamirTB/final_advanced.git 
+    git clone git@git.01.alem.school:msarvaro/forum.git 
 ```
 2. Download dependecies:
 ```go
@@ -67,3 +67,9 @@ Regular user:
 ```go
     go run ./cmd/app
 ```
+
+## Authors 👁️👅👁️
+
+[msarvaro](https://01.alem.school/git/msarvaro)
+
+[nmagau](https://01.alem.school/git/nmagau)
